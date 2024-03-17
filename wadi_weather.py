@@ -24,8 +24,7 @@ st.set_page_config(
 
 # Read data
 conn = st.connection("gsheets", type=GSheetsConnection)
-wdata = conn.read(parse_dates=["date"],
-               dayfirst=True).dropna()
+wdata = conn.read(parse_dates=["date"]).dropna()
 
 # Determine total date range in sheet, and set
 # initial date range to the first month of data.
