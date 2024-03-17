@@ -9,7 +9,6 @@ streamlit run --server.fileWatcherType=poll --server.port 8503 wadi_weather.py
 import streamlit as st
 from streamlit_gsheets import GSheetsConnection
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
 import warnings
 import datetime 
@@ -26,15 +25,23 @@ st.set_page_config(
 # Read data
 conn = st.connection("gsheets", type=GSheetsConnection)
 wdata = conn.read(parse_dates=["date"],
-               dayfirst=True)
+               dayfirst=True).dropna()
+
+# Determine total date range in sheet, and set
+# initial date range to the first month of data.
+start_date = wdata.date.min()
+end_date = wdata.date.max()
+start_date_end_month = start_date + pd.offsets.MonthEnd()
+
+d1, d2 = start_date.to_pydatetime(), start_date_end_month.to_pydatetime()
+d3 = end_date.to_pydatetime()
 
 # Sidebar input (year and colormap)
 st.sidebar.title('⛅ Wadi ad-Dawasir weather data')
 
-# Initial date range:
+# Initial date range
 if 'cdate_range' not in st.session_state:
-    st.session_state['cdate_range'] = [datetime.date(2019,6,1), 
-                                       datetime.date(2019,6,30)]
+    st.session_state['cdate_range'] = [d1, d2] 
 
 cdate_range = st.session_state['cdate_range']
 
@@ -104,9 +111,8 @@ plot_et.add_trace(
 
 selected_range_date = st.sidebar.date_input(
     "Plot view date range",
-    (datetime.date(2018, 8, 1), datetime.date(2018,8,31)),
-    datetime.date(2018, 8, 1),
-    datetime.date(2019, 12, 27),
+    (d1, d2),
+    d1, d3,
     key="date_range",
 )
 
