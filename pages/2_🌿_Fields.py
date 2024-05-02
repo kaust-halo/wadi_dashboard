@@ -101,5 +101,8 @@ def style(feature):
 m.add_gdf(gdf, layer_name="Fields",
           style_function = style,
 )
+
+m.add_legend(title="Crop", legend_dict=color_dict, position="bottomleft")
+
 m.to_streamlit(height=700)
 
