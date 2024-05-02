@@ -27,6 +27,6 @@ st.title("2023 INMA fields map")
 m = leafmap.Map(
     locate_control=True, latlon_control=True, draw_export=False, minimap_control=True
 )
-m.add_gdf(gdf, layer_name="Fields")
+#m.add_gdf(gdf, layer_name="Fields")
 m.to_streamlit(height=700)
 
