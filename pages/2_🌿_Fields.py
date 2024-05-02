@@ -6,6 +6,7 @@ import leafmap.foliumap as leafmap
 from streamlit_gsheets import GSheetsConnection
 import geopandas as gpd
 from shapely import wkt
+from folium.plugins import MiniMap
 
 
 # Page configuration
@@ -60,8 +61,15 @@ st.sidebar.info(markdown)
 st.title("2023 INMA fields map")
 
 m = leafmap.Map(
-    locate_control=True, latlon_control=True, draw_export=False, minimap_control=True
+    locate_control=False, 
+    search_control=False, 
+    draw_export=False, 
+    draw_control=False,
+    minimap_control=False,
+    measure_control=False,
+    latlon_control=True,
 )
+MiniMap(zoom_level_offset=-9).add_to(m)
 def style(feature):
     return {
         "fillColor": color_dict.get(feature["properties"]["Crop"],"#000000"),
