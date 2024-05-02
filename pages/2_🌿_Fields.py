@@ -2,16 +2,16 @@
 Wadi ad-Dawasir INMA fields (2023 only for now)
 """
 import streamlit as st
-from streamlit_gsheets import GSheetsConnection
 import leafmap.foliumap as leafmap
-import geopandas as gpd
-from shapely import wkt
+#from streamlit_gsheets import GSheetsConnection
+#import geopandas as gpd
+#from shapely import wkt
 
-sheet1_url = st.secrets["gsheets"]["geo"]
-conn = st.connection("gsheets", type=GSheetsConnection)
-gdata = conn.read(spreadsheet=sheet1_url).dropna()  # Different sheet than the weather one.
-gdata['geometry'] = gdata.geometry.apply(wkt.loads)
-gdf = gpd.GeoDataFrame(gdata)
+#sheet1_url = st.secrets["gsheets"]["geo"]
+#conn = st.connection("gsheets", type=GSheetsConnection)
+#gdata = conn.read(spreadsheet=sheet1_url).dropna()  # Different sheet than the weather one.
+#gdata['geometry'] = gdata.geometry.apply(wkt.loads)
+#gdf = gpd.GeoDataFrame(gdata)
 
 
 markdown = """
