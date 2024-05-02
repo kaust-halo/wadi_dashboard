@@ -6,6 +6,12 @@ import leafmap.foliumap as leafmap
 from streamlit_gsheets import GSheetsConnection
 import geopandas as gpd
 from shapely import wkt
+# Page configuration
+st.set_page_config(
+    page_title="Wadi ad-Dawasir INMA fields map",
+    page_icon="🌿",
+    layout="wide",
+    initial_sidebar_state="expanded")
 
 sheet1_url = st.secrets["gsheets"]["geo"]
 conn = st.connection("gsheets", type=GSheetsConnection)
