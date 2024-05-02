@@ -18,8 +18,11 @@ st.set_page_config(
 
 # Secrets
 sheet1_url = st.secrets["gsheets"]["geo"]
+xyz_layers = st.secrets["xyz"]
+
+# Read the geospatial data (fields)
 conn = st.connection("gsheets", type=GSheetsConnection)
-gdata = conn.read(spreadsheet=sheet1_url).dropna()  # Different sheet than the weather one.
+gdata = conn.read(spreadsheet=sheet1_url).dropna()  
 gdata['geometry'] = gdata.geometry.apply(wkt.loads)
 gdf = gpd.GeoDataFrame(gdata)
 
@@ -70,6 +73,24 @@ m = leafmap.Map(
     latlon_control=True,
 )
 MiniMap(zoom_level_offset=-9).add_to(m)
+
+landsat_2023 = xyz_layers["landsat_2023"]
+ndvi_2023 = xyz_layers["ndvi_2023"]
+m.add_tile_layer(
+    url=landsat_2023,
+    name="2023 Landsat basemap",
+    attribution="Landsat, KAUST-HALO",
+    max_native_zoom=13,
+    shown = False
+)
+m.add_tile_layer(
+    url=ndvi_2023,
+    name="2023 Max NDVI",
+    attribution="Landsat, KAUST-HALO",
+    max_native_zoom=13,
+    shown = False
+)
+
 def style(feature):
     return {
         "fillColor": color_dict.get(feature["properties"]["Crop"],"#000000"),
