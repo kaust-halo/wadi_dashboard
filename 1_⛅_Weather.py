@@ -7,6 +7,7 @@ import pandas as pd
 import plotly.graph_objects as go
 import warnings
 import datetime 
+import leafmap.foliumap as leafmap
 
 warnings.filterwarnings('ignore')
 
@@ -160,6 +161,13 @@ plot_et.update_layout(xaxis=dict(range=pdate_range, uirevision=True), uirevision
 
 # Main panel 
 st.markdown("## Wadi ad-Dawasir weather data")
+
+# TEMPORARY TESTING LEAFMAP
+m = leafmap.Map(minimap_control=True)
+m.add_basemap("OpenTopoMap")
+m.to_streamlit(height=500)
+
+
 st.plotly_chart(plot_temperature, use_container_width=True)
 st.plotly_chart(plot_humidity, use_container_width=True)
 st.plotly_chart(plot_wind, use_container_width=True)
