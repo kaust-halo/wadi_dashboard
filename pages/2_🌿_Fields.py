@@ -72,7 +72,7 @@ m = leafmap.Map(
     measure_control=False,
     latlon_control=True,
 )
-MiniMap(zoom_level_offset=-9).add_to(m)
+MiniMap(zoom_level_offset=-9, position="bottomleft").add_to(m)
 
 landsat_2023 = xyz_layers["landsat_2023"]
 ndvi_2023 = xyz_layers["ndvi_2023"]
@@ -102,7 +102,7 @@ m.add_gdf(gdf, layer_name="Fields",
           style_function = style,
 )
 
-m.add_legend(title="Crop", legend_dict=color_dict, position="bottomleft")
+m.add_legend(title="Crop", legend_dict=color_dict, position="bottomright")
 
 m.to_streamlit(height=700)
 
