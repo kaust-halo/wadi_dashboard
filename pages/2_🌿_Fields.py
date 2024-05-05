@@ -37,6 +37,8 @@ crop_emoji={
     "Watermelon": "🍉"
 }
 # Display in sidebar -- 
+st.sidebar.title("Total area")
+st.sidebar.metric("Total area", f"{total_area.sum():.0f} ha")
 for x in total_area.items():
     st.sidebar.metric(f"{crop_emoji[x[0]]}{x[0]}", f"{x[1]:.0f} ha")
 
